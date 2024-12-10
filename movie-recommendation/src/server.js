@@ -9,8 +9,8 @@ const path = require('path');
 const app = express();
 
 // Your OMDb API key
-const OMDB_API_KEY = 'c0a081d9';
-const OMDB_API_URL = 'http://www.omdbapi.com/';
+const OMDB_API_KEY = process.env.OMDB_API_KEY;
+const OMDB_API_URL = process.env.OMDB_API_URL;
 
 // Serve static files from the 'public' folder
 app.use(express.static(path.join(__dirname, 'public')));
