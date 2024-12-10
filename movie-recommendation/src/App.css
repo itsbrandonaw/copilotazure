@@ -1,67 +1,98 @@
-body {
-  font-family: 'Arial', sans-serif;
-  background-color: #2c3e50; /* Midnight blue or dark gray */
-  color: white;
-  margin: 0;
-  padding: 0;
-}
-
+/* General styles for the app */
 .App {
   display: flex;
   justify-content: space-between;
-  margin: 50px auto;
   padding: 20px;
-  background-color: #34495e; /* Slightly lighter dark background */
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  width: 1000px;
+  font-family: Arial, sans-serif;
+  background-color: #2c3e50; /* Dark blue background */
+  color: white;
+  min-height: 100vh;
 }
 
-.left-column,
-.right-column {
-  width: 45%; /* 45% width for each column */
+/* Left column (Movie List) */
+.left-column {
+  flex: 1;
+  padding-right: 20px;
 }
 
-h1 {
-  text-align: center;
-  color: #f39c12; /* Gold/yellow color for a cinematic touch */
-  font-size: 3rem;
-  margin-bottom: 30px;
+.left-column h1 {
+  font-size: 3rem; /* Larger MovieGPT text */
+  color: #fff;
+  margin-bottom: 20px;
+  font-weight: bold;
 }
 
 .add-movie-button {
-  padding: 10px 20px;
-  background-color: #e74c3c; /* Red for action */
+  background-color: #34495e;
   color: white;
   border: none;
-  border-radius: 5px;
-  font-size: 1.2rem;
+  padding: 10px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  font-size: 1rem;
+  margin-bottom: 20px;
+  border-radius: 5px;
 }
 
 .add-movie-button:hover {
-  background-color: #c0392b; /* Darker red on hover */
+  background-color: #2c3e50;
 }
 
-h2 {
-  text-align: center;
-  color: #ecf0f1;
+/* Movies list container */
+.movies-list {
+  display: flex;
+  flex-direction: column;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
+.movie-box {
+  background-color: #34495e; /* Dark box for each movie */
+  color: white;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5); /* Add shadow for depth */
 }
 
-ul li {
-  padding: 8px;
-  border-bottom: 1px solid #7f8c8d; /* Lighter gray for item separation */
-  font-size: 1.1rem;
+.movie-box h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
 }
 
-ul li:last-child {
-  border-bottom: none;
+.stars-container {
+  margin-bottom: 10px;
+}
+
+.star {
+  color: #f1c40f;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+
+.star.filled {
+  color: #e67e22;
+}
+
+/* Right column (Recommended Movies) */
+.right-column {
+  flex: 1;
+  padding-left: 20px;
+}
+
+.right-column h2 {
+  font-size: 2rem;
+  color: #fff;
+  margin-bottom: 20px;
+  font-weight: bold;
+  animation: fadeIn 3s ease-out; /* Added slower fade-in animation */
+}
+
+/* Slow fade-in animation for recommended section */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 /* Modal styles */
@@ -71,152 +102,88 @@ ul li:last-child {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  background-color: rgba(0, 0, 0, 0.7); /* Dark background with transparency */
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1000; /* Make sure it's above other content */
+  z-index: 1000;
 }
 
 .modal-content {
-  background-color: #34495e;
-  padding: 20px;
+  background-color: #34495e; /* Dark box for the modal */
+  padding: 30px;
   border-radius: 10px;
-  max-width: 400px;
-  width: 90%; /* Ensure modal is responsive on smaller screens */
-  box-sizing: border-box; /* Prevents padding from affecting width */
-  text-align: center;
+  width: 400px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
 }
 
-.modal-content input {
-  width: 80%;
-  padding: 10px;
-  margin-top: 20px; /* Added space */
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
-  background-color: #2c3e50; /* Matching dark background */
-  color: white;
+.modal-content h3 {
+  margin-bottom: 15px;
 }
 
 .modal-content label {
+  font-weight: bold;
   display: block;
-  margin-top: 20px;
-  font-size: 1rem;
-  color: #ecf0f1;
-}
-
-.stars-container {
-  display: flex;
-  justify-content: center;
   margin-top: 10px;
 }
 
-.star {
-  font-size: 2rem;
-  cursor: pointer;
-  color: #bdc3c7; /* Empty star color */
-  transition: color 0.3s;
-}
-
-.star.filled {
-  color: #f39c12; /* Filled star color (gold) */
-}
-
-.modal-content button {
-  padding: 10px 20px;
-  background-color: #e74c3c; /* Red for action */
+.modal-content input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #34495e;
+  border-radius: 5px;
+  background-color: #34495e;
   color: white;
+}
+
+.buttons-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttons-container button {
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
-  font-size: 1.2rem;
   cursor: pointer;
-  transition: background-color 0.3s;
-  margin-top: 20px; /* Add space between buttons */
 }
 
-.modal-content button:hover {
-  background-color: #c0392b; /* Darker red on hover */
+.buttons-container button:disabled {
+  background-color: #bdc3c7;
+  cursor: not-allowed;
 }
 
-.modal-content .cancel-button {
-  background-color: #7f8c8d; /* Gray cancel button */
-  margin-top: 10px; /* Ensure the cancel button has space from the add movie button */
-}
-
-.modal-content .cancel-button:hover {
-  background-color: #95a5a6; /* Light gray on hover */
-}
-
-.modal-content .buttons-container {
-  display: flex;
-  flex-direction: column; /* Stack buttons vertically */
-  gap: 10px; /* Space between buttons */
-}
-
-.suggestions-list {
-  list-style-type: none;
-  padding: 0;
-  margin-top: 10px;
-  background-color: #34495e;
-  border-radius: 5px;
-  max-height: 150px;
-  overflow-y: auto;
-}
-
-.suggestions-list li {
-  padding: 8px;
-  cursor: pointer;
+.buttons-container button:hover {
+  background-color: #2c3e50;
   color: white;
 }
 
-.suggestions-list li:hover {
-  background-color: #2c3e50;
+.cancel-button {
+  background-color: #e74c3c;
+  color: white;
 }
 
-.error-message {
-  color: #e74c3c; /* Red error message */
-  margin-top: 10px;
+.cancel-button:hover {
+  background-color: #c0392b;
+}
+
+.modal-content p {
+  color: #7f8c8d;
   font-size: 1rem;
-}
-
-/* Style for the left column containing the movie list */
-.left-column {
-  width: 45%; /* 45% width for each column */
-}
-
-.movies-list {
-  margin-top: 30px;
-}
-
-.movie-box {
-  background-color: #34495e;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.movie-box h3 {
-  color: #f39c12; /* Gold/yellow color for movie title */
   text-align: center;
-}
-
-.stars-container {
-  display: flex;
-  justify-content: center;
   margin-top: 10px;
 }
 
-.star {
-  font-size: 2rem;
-  cursor: pointer;
-  color: #bdc3c7; /* Empty star color */
-  transition: color 0.3s;
+/* Small text for IMDB rating and description */
+
+.small-text {
+  font-size: 0.9rem;
+  color: #bdc3c7; /* Lighter color for small text */
+  margin-top: 5px;
+  line-height: 1.4;
 }
 
-.star.filled {
-  color: #f39c12; /* Filled star color (gold) */
-}
 
-/* Modal and other styles remain the same */
+

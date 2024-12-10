@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import axios from 'axios';
 
@@ -8,6 +8,7 @@ function App() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [movies, setMovies] = useState([]); // Store the list of movies
   const [loading, setLoading] = useState(false); // Loading state
+  const [recommendations, setRecommendations] = useState([]); // Store the recommended movies
 
   // Define OMDB API URL and your API Key
   const omdbApiKey = 'c0a081d9'; // Replace with your OMDB API key
@@ -36,6 +37,9 @@ function App() {
         return {
           title: response.data.Title,  // Get the exact title
           rating: response.data.imdbRating ? parseFloat(response.data.imdbRating) : 0,
+          description: response.plot,
+          genres: response.data.Genre.split(', '),  // Extract genres
+          actors: response.data.Actors.split(', ')  // Extract actors
         };
       } else {
         alert('Movie not found!');
@@ -49,13 +53,13 @@ function App() {
       setLoading(false); // Stop loading
     }
   };
-  
 
   // Handle adding movie
   const handleAddMovie = async () => {
     const movieData = await fetchMovieData(movieTitle);
     if (movieData) {
       setMovies([...movies, { ...movieData, userRating: rating }]); // Add the new movie with the user rating
+      fetchRecommendations(movieData.genres, movieData.actors);  // Fetch recommendations based on genres and actors
     }
     setIsModalOpen(false); // Close modal after adding movie
     setMovieTitle(''); // Reset the title input
@@ -72,6 +76,67 @@ function App() {
     setIsModalOpen(false);
   };
 
+  // Fetch movie recommendations based on genres and actors
+  // Fetch movie recommendations based on genres and actors
+  const fetchRecommendations = async (genres, actors) => {
+    try {
+      setLoading(true);
+      const genreRecommendations = [];
+      const actorRecommendations = [];
+  
+      // Fetch movie recommendations based on genres
+      for (let genre of genres) {
+        const genreResponse = await axios.get(`http://www.omdbapi.com/?apikey=${omdbApiKey}&s=${genre}&type=movie`);
+        if (genreResponse.data.Search) {
+          genreRecommendations.push(...genreResponse.data.Search);
+        }
+      }
+  
+      // Fetch movie recommendations based on actors
+      for (let actor of actors) {
+        const actorResponse = await axios.get(`http://www.omdbapi.com/?apikey=${omdbApiKey}&s=${actor}&type=movie`);
+        if (actorResponse.data.Search) {
+          actorRecommendations.push(...actorResponse.data.Search);
+        }
+      }
+  
+      // Merge and remove duplicates
+      const allRecommendations = [...genreRecommendations, ...actorRecommendations];
+      const uniqueRecommendations = Array.from(new Set(allRecommendations.map((movie) => movie.Title)))
+        .map((title) => allRecommendations.find((movie) => movie.Title === title));
+  
+      // Fetch detailed information for each movie
+      const enhancedRecommendations = await Promise.all(
+        uniqueRecommendations.map(async (movie) => {
+          const detailedResponse = await axios.get(`http://www.omdbapi.com/?apikey=${omdbApiKey}&t=${movie.Title}`);
+          return {
+            ...movie,
+            rating: detailedResponse.data.imdbRating || 'N/A',  // Add IMDb rating
+            description: detailedResponse.data.Plot || 'No description available'  // Add description
+          };
+        })
+      );
+  
+      // Sort by IMDb rating in descending order
+      const sortedRecommendations = enhancedRecommendations.sort((a, b) => {
+        const ratingA = parseFloat(a.rating) || 0;
+        const ratingB = parseFloat(b.rating) || 0;
+        return ratingB - ratingA;  // Sort from highest to lowest rating
+      });
+  
+      // Take top 10 recommendations
+      const top10Recommendations = sortedRecommendations.slice(0, 10);
+  
+      setRecommendations(top10Recommendations);  // Update the state with top 10 recommendations
+    } catch (error) {
+      console.error('Error fetching recommendations', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+  
+
+
   return (
     <div className="App">
       <div className="left-column">
@@ -80,33 +145,45 @@ function App() {
         
         {/* Display added movies */}
         <div className="movies-list">
-  {movies.map((movie, index) => (
-    <div
-      key={index}
-      className="movie-box"
-      style={{ backgroundColor: darkColors[index % darkColors.length] }} // Cycle through dark colors
-    >
-      <h3>{movie.title}</h3>  {/* This will now show the exact title from OMDB */}
-      <div className="stars-container">
-        {[1, 2, 3, 4, 5].map((star) => (
-          <span
-            key={star}
-            className={`star ${movie.userRating >= star ? 'filled' : ''}`}
-          >
-            ★
-          </span>
-        ))}
-      </div>
-      <p>IMDB Rating: {movie.rating}</p> {/* Display IMDB rating fetched from OMDB */}
-    </div>
-  ))}
-</div>
-
+          {movies.map((movie, index) => (
+            <div
+              key={index}
+              className="movie-box"
+              style={{ backgroundColor: darkColors[index % darkColors.length] }} // Cycle through dark colors
+            >
+              <h3>{movie.title}</h3>  {/* This will now show the exact title from OMDB */}
+              <div className="stars-container">
+                {[1, 2, 3, 4, 5].map((star) => (
+                  <span
+                    key={star}
+                    className={`star ${movie.userRating >= star ? 'filled' : ''}`}
+                  >
+                    ★
+                  </span>
+                ))}
+              </div>
+              <p>IMDB Rating: {movie.rating}</p> {/* Display IMDB rating fetched from OMDB */}
+            </div>
+          ))}
+        </div>
       </div>
 
       <div className="right-column">
         <h2>Recommended for You</h2>
-        {/* Display recommendations here later */}
+        {/* Display movie recommendations */}
+        <div className="movies-list">
+          {recommendations.map((movie, index) => (
+            <div
+              key={index}
+              className="movie-box"
+              style={{ backgroundColor: darkColors[index % darkColors.length] }}
+            >
+              <h3>{movie.Title}</h3> {/* Show recommended movie title */}
+              <p className="small-text">IMDB Rating: {movie.rating}</p>
+              <p className="small-text">{movie.description}</p> {/* Display movie description here */}
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Modal */}
