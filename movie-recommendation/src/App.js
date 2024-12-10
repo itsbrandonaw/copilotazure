@@ -4,30 +4,37 @@ import './App.css';
 function App() {
   const [favoriteMovie, setFavoriteMovie] = useState('');
   const [recommendedMovies, setRecommendedMovies] = useState([]);
+  const [error, setError] = useState('');
 
   // Handle user input for favorite movie
   const handleInputChange = (e) => {
     setFavoriteMovie(e.target.value);
   };
 
-  // Handle form submission to generate movie recommendations
-  const handleSubmit = (e) => {
+  // Handle form submission to get movie recommendations
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // A simple recommendation system (you can later integrate a real one)
-    const recommendations = {
-      "inception": ["Interstellar", "The Dark Knight", "Dunkirk", "Memento"],
-      "matrix": ["John Wick", "Inception", "Blade Runner 2049", "Minority Report"],
-      "batman": ["The Dark Knight", "Joker", "Watchmen", "The Prestige"],
-      "avengers": ["Iron Man", "Thor", "Spider-Man: Homecoming", "Black Panther"]
-    };
+    if (!favoriteMovie) {
+      setError("Please enter a movie name.");
+      return;
+    }
 
-    // Look for recommendations based on favorite movie
-    const movieKey = favoriteMovie.toLowerCase();
-    if (recommendations[movieKey]) {
-      setRecommendedMovies(recommendations[movieKey]);
-    } else {
-      setRecommendedMovies(["Sorry, no recommendations found for your movie"]);
+    setError(""); // Clear previous error message
+
+    try {
+      const response = await fetch(`http://www.omdbapi.com/?s=${favoriteMovie}&apikey=c0a081d9`);
+      const data = await response.json();
+
+      if (data.Response === 'True') {
+        setRecommendedMovies(data.Search); // Display movie results
+      } else {
+        setRecommendedMovies([]); // No results found
+        setError("No movies found for your search.");
+      }
+    } catch (error) {
+      setError("Failed to fetch recommendations. Please try again.");
+      console.error(error);
     }
   };
 
@@ -47,12 +54,16 @@ function App() {
         <button type="submit">Get Recommendations</button>
       </form>
 
+      {error && <p className="error">{error}</p>}
+
       {recommendedMovies.length > 0 && (
         <div>
           <h3>Recommended Movies:</h3>
           <ul>
             {recommendedMovies.map((movie, index) => (
-              <li key={index}>{movie}</li>
+              <li key={index}>
+                <strong>{movie.Title}</strong> ({movie.Year})
+              </li>
             ))}
           </ul>
         </div>
