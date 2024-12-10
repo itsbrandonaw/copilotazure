@@ -1,10 +1,22 @@
 import React, { useState } from 'react';
 import './App.css';
+import axios from 'axios';
 
 function App() {
   const [favoriteMovie, setFavoriteMovie] = useState('');
   const [recommendedMovies, setRecommendedMovies] = useState([]);
   const [error, setError] = useState('');
+  const [data, setData] = useState([]);
+
+  // Place data into MongoDB(?)
+  useEffect(() => {
+    axios.get('http://localhost:5000/')
+      .then(response => {
+        console.log(response.data);
+        setData(response.data);
+      })
+      .catch(error => console.log(error));
+  }, []);
 
   // Handle user input for favorite movie
   const handleInputChange = (e) => {
@@ -68,6 +80,10 @@ function App() {
           </ul>
         </div>
       )}
+      
+      <h1>MongoDB Data</h1>
+      <pre>{JSON.stringify(data, null, 2)}</pre>
+
     </div>
   );
 }
