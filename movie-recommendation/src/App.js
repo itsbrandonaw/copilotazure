@@ -5,32 +5,30 @@ function App() {
   const [favoriteMovie, setFavoriteMovie] = useState('');
   const [recommendedMovies, setRecommendedMovies] = useState([]);
 
+  // Handle user input for favorite movie
   const handleInputChange = (e) => {
     setFavoriteMovie(e.target.value);
   };
 
+  // Handle form submission to generate movie recommendations
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Simple logic to provide movie recommendations
-    // For now, we just simulate recommendations.
-    const recommendations = [
-      "Inception",
-      "The Matrix",
-      "Interstellar",
-      "Blade Runner 2049",
-      "The Dark Knight",
-    ];
+    // A simple recommendation system (you can later integrate a real one)
+    const recommendations = {
+      "inception": ["Interstellar", "The Dark Knight", "Dunkirk", "Memento"],
+      "matrix": ["John Wick", "Inception", "Blade Runner 2049", "Minority Report"],
+      "batman": ["The Dark Knight", "Joker", "Watchmen", "The Prestige"],
+      "avengers": ["Iron Man", "Thor", "Spider-Man: Homecoming", "Black Panther"]
+    };
 
-    // Filter recommendations based on the user's favorite movie
-    if (favoriteMovie.toLowerCase() === "inception") {
-      recommendations.push("Dunkirk");
-    } else if (favoriteMovie.toLowerCase() === "matrix") {
-      recommendations.push("John Wick");
+    // Look for recommendations based on favorite movie
+    const movieKey = favoriteMovie.toLowerCase();
+    if (recommendations[movieKey]) {
+      setRecommendedMovies(recommendations[movieKey]);
+    } else {
+      setRecommendedMovies(["Sorry, no recommendations found for your movie"]);
     }
-
-    // Update state to display the recommendations
-    setRecommendedMovies(recommendations);
   };
 
   return (
