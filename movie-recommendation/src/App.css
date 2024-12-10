@@ -97,7 +97,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -107,7 +107,7 @@
 .modal-content {
   background-color: #34495e;
   padding: 30px;
-  border-radius: 10px;
+  border-radius: 10px; /* Set the border-radius to a specific value */
   max-width: 500px;
   width: 100%;
   color: white;
@@ -127,6 +127,18 @@
 .modal-content .stars-container {
   margin: 20px 0;
 }
+
+.modal-content label {
+  display: block;  /* Makes the label a block element */
+  margin-bottom: 5px;  /* Adds some space below the label */
+}
+
+.modal-content input {
+  display: block;  /* Makes the input a block element */
+  width: 80%;  /* Adjust input width as needed */
+  margin-bottom: 15px;  /* Adds some space after the input field */
+}
+
 
 .buttons-container {
   display: flex;
@@ -150,6 +162,7 @@
 .buttons-container button:hover {
   background-color: #f39c12;
 }
+
 
 /* Small text style for ratings and descriptions */
 .small-text {

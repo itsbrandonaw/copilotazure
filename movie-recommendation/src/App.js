@@ -161,12 +161,12 @@ function App() {
           <div className="modal-content">
             <h3>Add a Watched Movie</h3>
             <label>Movie Title:</label>
-            <input
-              type="text"
-              placeholder="Enter movie title"
-              value={movieTitle}
-              onChange={handleMovieTitleChange}
-            />
+              <input
+                type="text"
+                placeholder="Enter movie title"
+                value={movieTitle}
+                onChange={handleMovieTitleChange}
+              />
             <label>Rating:</label>
             <div className="stars-container">
               {[1, 2, 3, 4, 5].map((star) => (
