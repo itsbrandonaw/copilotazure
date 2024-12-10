@@ -6,17 +6,6 @@ function App() {
   const [movieTitle, setMovieTitle] = useState('');
   const [rating, setRating] = useState(0); // Store the rating out of 5
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [data, setData] = useState([]);
-
-  // Place data into MongoDB(?)
-  useEffect(() => {
-    axios.get('http://localhost:5000/')
-      .then(response => {
-        console.log(response.data);
-        setData(response.data);
-      })
-      .catch(error => console.log(error));
-  }, []);
 
   // Handle movie title change
   const handleMovieTitleChange = (e) => {
@@ -88,10 +77,6 @@ function App() {
           </div>
         </div>
       )}
-      
-      <h1>MongoDB Data</h1>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
-
     </div>
   );
 }
