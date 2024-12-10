@@ -1,39 +1,52 @@
-.App {
-  text-align: center;
+body {
   font-family: 'Arial', sans-serif;
+  background-color: #2c3e50; /* Midnight blue or dark gray */
+  color: white;
   margin: 0;
+  padding: 0;
+}
+
+.App {
+  display: flex;
+  justify-content: space-between;
+  margin: 50px auto;
   padding: 20px;
+  background-color: #34495e; /* Slightly lighter dark background */
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  width: 1000px;
 }
 
-form {
-  margin: 20px 0;
+.left-column,
+.right-column {
+  width: 45%; /* 45% width for each column */
 }
 
-input {
-  padding: 8px;
-  font-size: 16px;
-  margin-right: 10px;
-  width: 200px;
-  border-radius: 5px;
+h1 {
+  text-align: center;
+  color: #f39c12; /* Gold/yellow color for a cinematic touch */
+  font-size: 3rem;
+  margin-bottom: 30px;
 }
 
-button {
+.add-movie-button {
   padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #007bff;
+  background-color: #e74c3c; /* Red for action */
   color: white;
   border: none;
   border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
-button:hover {
-  background-color: #0056b3;
+.add-movie-button:hover {
+  background-color: #c0392b; /* Darker red on hover */
 }
 
-h3 {
-  margin-top: 20px;
-  color: #333;
+h2 {
+  text-align: center;
+  color: #ecf0f1;
 }
 
 ul {
@@ -41,10 +54,128 @@ ul {
   padding: 0;
 }
 
-li {
-  background-color: #f1f1f1;
+ul li {
+  padding: 8px;
+  border-bottom: 1px solid #7f8c8d; /* Lighter gray for item separation */
+  font-size: 1.1rem;
+}
+
+ul li:last-child {
+  border-bottom: none;
+}
+
+/* Modal styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Make sure it's above other content */
+}
+
+.modal-content {
+  background-color: #34495e;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 400px;
+  width: 90%; /* Ensure modal is responsive on smaller screens */
+  box-sizing: border-box; /* Prevents padding from affecting width */
+  text-align: center;
+}
+
+.modal-content input {
+  width: 80%;
   padding: 10px;
-  margin: 5px;
+  margin-top: 20px; /* Added space */
+  border: 1px solid #ccc;
   border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 1rem;
+  background-color: #2c3e50; /* Matching dark background */
+  color: white;
+}
+
+.modal-content label {
+  display: block;
+  margin-top: 20px;
+  font-size: 1rem;
+  color: #ecf0f1;
+}
+
+.stars-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.star {
+  font-size: 2rem;
+  cursor: pointer;
+  color: #bdc3c7; /* Empty star color */
+  transition: color 0.3s;
+}
+
+.star.filled {
+  color: #f39c12; /* Filled star color (gold) */
+}
+
+.modal-content button {
+  padding: 10px 20px;
+  background-color: #e74c3c; /* Red for action */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px; /* Add space between buttons */
+}
+
+.modal-content button:hover {
+  background-color: #c0392b; /* Darker red on hover */
+}
+
+.modal-content .cancel-button {
+  background-color: #7f8c8d; /* Gray cancel button */
+  margin-top: 10px; /* Ensure the cancel button has space from the add movie button */
+}
+
+.modal-content .cancel-button:hover {
+  background-color: #95a5a6; /* Light gray on hover */
+}
+
+.modal-content .buttons-container {
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  gap: 10px; /* Space between buttons */
+}
+
+.suggestions-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 10px;
+  background-color: #34495e;
+  border-radius: 5px;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.suggestions-list li {
+  padding: 8px;
+  cursor: pointer;
+  color: white;
+}
+
+.suggestions-list li:hover {
+  background-color: #2c3e50;
+}
+
+.error-message {
+  color: #e74c3c; /* Red error message */
+  margin-top: 10px;
+  font-size: 1rem;
 }

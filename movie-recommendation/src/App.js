@@ -2,70 +2,78 @@ import React, { useState } from 'react';
 import './App.css';
 
 function App() {
-  const [favoriteMovie, setFavoriteMovie] = useState('');
-  const [recommendedMovies, setRecommendedMovies] = useState([]);
-  const [error, setError] = useState('');
+  const [movieTitle, setMovieTitle] = useState('');
+  const [rating, setRating] = useState(0); // Store the rating out of 5
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Handle user input for favorite movie
-  const handleInputChange = (e) => {
-    setFavoriteMovie(e.target.value);
+  // Handle movie title change
+  const handleMovieTitleChange = (e) => {
+    setMovieTitle(e.target.value);
   };
 
-  // Handle form submission to get movie recommendations
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // Handle rating click (set the number of stars)
+  const handleRatingClick = (stars) => {
+    setRating(stars);
+  };
 
-    if (!favoriteMovie) {
-      setError("Please enter a movie name.");
-      return;
-    }
+  // Handle adding movie
+  const handleAddMovie = () => {
+    // Here, you can add your movie and rating to the database
+    alert(`Movie: ${movieTitle}, Rating: ${rating} stars`);
+    setIsModalOpen(false); // Close modal after adding movie
+  };
 
-    setError(""); // Clear previous error message
+  // Open modal to add movie
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
 
-    try {
-      const response = await fetch(`http://www.omdbapi.com/?s=${favoriteMovie}&apikey=c0a081d9`);
-      const data = await response.json();
-
-      if (data.Response === 'True') {
-        setRecommendedMovies(data.Search); // Display movie results
-      } else {
-        setRecommendedMovies([]); // No results found
-        setError("No movies found for your search.");
-      }
-    } catch (error) {
-      setError("Failed to fetch recommendations. Please try again.");
-      console.error(error);
-    }
+  // Close modal
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
     <div className="App">
-      <h1>Personalized Movie Recommendation App</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Enter your favorite movie:
-          <input
-            type="text"
-            value={favoriteMovie}
-            onChange={handleInputChange}
-            placeholder="Type a movie name"
-          />
-        </label>
-        <button type="submit">Get Recommendations</button>
-      </form>
+      <div className="left-column">
+        <h1>MovieGPT</h1>
+        <button className="add-movie-button" onClick={openModal}>+ Add Movie</button>
+      </div>
 
-      {error && <p className="error">{error}</p>}
+      <div className="right-column">
+        <h2>Recommended for You</h2>
+        {/* Display recommendations here later */}
+      </div>
 
-      {recommendedMovies.length > 0 && (
-        <div>
-          <h3>Recommended Movies:</h3>
-          <ul>
-            {recommendedMovies.map((movie, index) => (
-              <li key={index}>
-                <strong>{movie.Title}</strong> ({movie.Year})
-              </li>
-            ))}
-          </ul>
+      {/* Modal */}
+      {isModalOpen && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Add a Watched Movie</h3>
+            <label>Movie Title:</label>
+            <input
+              type="text"
+              placeholder="Enter movie title"
+              value={movieTitle}
+              onChange={handleMovieTitleChange}
+            />
+            <label>Rating:</label>
+            <div className="stars-container">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <span
+                  key={star}
+                  className={`star ${rating >= star ? 'filled' : ''}`}
+                  onClick={() => handleRatingClick(star)}
+                >
+                  ★
+                </span>
+              ))}
+            </div>
+            <div className="buttons-container">
+              <button onClick={handleAddMovie}>Add Movie</button>
+              <button className="cancel-button" onClick={closeModal}>Cancel</button>
+            </div>
+          </div>
         </div>
       )}
     </div>
