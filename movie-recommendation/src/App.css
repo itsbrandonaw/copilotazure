@@ -16,6 +16,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start; /* Align items to the left */
+  width: 100%;
 }
 
 .left-column h1 {
@@ -44,12 +45,12 @@
 
 /* Movies list container */
 .movies-list {
-  display: flex;
+  display: auto;
   flex-direction: column;
 }
 
 .movie-box {
-  background-color: #34495e; /* Dark box for each movie */
+  background-color: #345e40; /* Dark box for each movie */
   color: white;
   padding: 20px;
   margin-bottom: 15px;
@@ -67,13 +68,13 @@
 }
 
 .star {
-  color: #f1c40f;
+  color: #f0ede1;
   cursor: pointer;
   font-size: 1.5rem;
 }
 
 .star.filled {
-  color: #e67e22;
+  color: #e6c922;
 }
 
 /* Right column (Recommended Movies) */
@@ -90,6 +91,7 @@
   animation: fadeIn 1s ease-out;
 }
 
+/* Modal styling */
 /* Modal styling */
 .modal {
   position: fixed;
@@ -129,14 +131,20 @@
 }
 
 .modal-content label {
-  display: block;  /* Makes the label a block element */
-  margin-bottom: 5px;  /* Adds some space below the label */
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
 }
 
 .modal-content input {
-  display: block;  /* Makes the input a block element */
-  width: 80%;  /* Adjust input width as needed */
-  margin-bottom: 15px;  /* Adds some space after the input field */
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #34495e;
+  border-radius: 5px;
+  background-color: #34495e;
+  color: white;
 }
 
 
