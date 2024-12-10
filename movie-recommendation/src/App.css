@@ -179,3 +179,44 @@ ul li:last-child {
   margin-top: 10px;
   font-size: 1rem;
 }
+
+/* Style for the left column containing the movie list */
+.left-column {
+  width: 45%; /* 45% width for each column */
+}
+
+.movies-list {
+  margin-top: 30px;
+}
+
+.movie-box {
+  background-color: #34495e;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.movie-box h3 {
+  color: #f39c12; /* Gold/yellow color for movie title */
+  text-align: center;
+}
+
+.stars-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.star {
+  font-size: 2rem;
+  cursor: pointer;
+  color: #bdc3c7; /* Empty star color */
+  transition: color 0.3s;
+}
+
+.star.filled {
+  color: #f39c12; /* Filled star color (gold) */
+}
+
+/* Modal and other styles remain the same */
