@@ -13,6 +13,9 @@
 .left-column {
   flex: 1;
   padding-right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the left */
 }
 
 .left-column h1 {
@@ -26,16 +29,18 @@
   background-color: #34495e;
   color: white;
   border: none;
-  padding: 10px;
+  padding: 10px 20px; /* Adjust padding to make the button more consistent */
   cursor: pointer;
   font-size: 1rem;
   margin-bottom: 20px;
   border-radius: 5px;
+  align-self: flex-start; /* Align the button to the left of the container */
 }
 
 .add-movie-button:hover {
   background-color: #2c3e50;
 }
+
 
 /* Movies list container */
 .movies-list {
@@ -82,27 +87,17 @@
   color: #fff;
   margin-bottom: 20px;
   font-weight: bold;
-  animation: fadeIn 3s ease-out; /* Added slower fade-in animation */
+  animation: fadeIn 1s ease-out;
 }
 
-/* Slow fade-in animation for recommended section */
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-/* Modal styles */
+/* Modal styling */
 .modal {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7); /* Dark background with transparency */
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -110,32 +105,27 @@
 }
 
 .modal-content {
-  background-color: #34495e; /* Dark box for the modal */
+  background-color: #34495e;
   padding: 30px;
   border-radius: 10px;
-  width: 400px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
-}
-
-.modal-content h3 {
-  margin-bottom: 15px;
-}
-
-.modal-content label {
-  font-weight: bold;
-  display: block;
-  margin-top: 10px;
+  max-width: 500px;
+  width: 100%;
+  color: white;
+  text-align: center;
 }
 
 .modal-content input {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  margin-bottom: 15px;
-  border: 1px solid #34495e;
-  border-radius: 5px;
-  background-color: #34495e;
+  background-color: #2c3e50;
   color: white;
+  border: 1px solid #34495e;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: 80%;
+  border-radius: 5px;
+}
+
+.modal-content .stars-container {
+  margin: 20px 0;
 }
 
 .buttons-container {
@@ -144,45 +134,37 @@
 }
 
 .buttons-container button {
-  padding: 10px 20px;
+  background-color: #e67e22;
+  color: white;
+  padding: 10px;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
+  font-size: 1rem;
+  border-radius: 5px;
 }
 
-.buttons-container button:disabled {
-  background-color: #bdc3c7;
-  cursor: not-allowed;
+.buttons-container .cancel-button {
+  background-color: #e74c3c;
 }
 
 .buttons-container button:hover {
-  background-color: #2c3e50;
-  color: white;
+  background-color: #f39c12;
 }
 
-.cancel-button {
-  background-color: #e74c3c;
-  color: white;
-}
-
-.cancel-button:hover {
-  background-color: #c0392b;
-}
-
-.modal-content p {
-  color: #7f8c8d;
-  font-size: 1rem;
-  text-align: center;
-  margin-top: 10px;
-}
-
-/* Small text for IMDB rating and description */
-
+/* Small text style for ratings and descriptions */
 .small-text {
   font-size: 0.9rem;
-  color: #bdc3c7; /* Lighter color for small text */
-  margin-top: 5px;
-  line-height: 1.4;
+  color: #bdc3c7;
+}
+
+/* Animation for fade-in effect */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 
